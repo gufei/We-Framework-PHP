@@ -38,7 +38,9 @@ class Wfsystem_Cache_Filecache {
     }
     
     public function flush(){
-        //递归删除目录下所有文件;
+        $dir = Wfsystem_Config::get('filecache');
+        Wfsystem_Filesystem::deletedir($dir);
+        mkdir($dir,0777,true);
     }
     
     public function getfile($key){
