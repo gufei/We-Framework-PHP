@@ -23,7 +23,7 @@ class Wfsystem_Request {
             }
 
             if (strpos($value, "\r") !== FALSE){
-                $value = str_replace(array("\r\n", "\r"), "\n", $value);
+                $value = str_replace(array("\r\n", "\r"), PHP_EOL, $value);
             }
         }
 

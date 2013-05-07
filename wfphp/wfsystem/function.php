@@ -7,7 +7,7 @@
  */
 class Wfsystem_Function {
     static public function load(){
-        foreach(glob(WF_SYS_FUNCTION_PATH."*.php") as $file_name){
+        foreach(glob(WF_SYS_FUNCTION_PATH."*".EXT) as $file_name){
             require_once $file_name;
         }
     }

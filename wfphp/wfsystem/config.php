@@ -12,7 +12,7 @@ class Wfsystem_Config {
      */
     public static function load(){
         $GLOBALS['WF_CONFIG'] = array();
-        foreach(glob(WF_SYS_CONF_PATH."*.php") as $conf_file_name){
+        foreach(glob(WF_SYS_CONF_PATH."*".EXT) as $conf_file_name){
             if(file_exists($conf_file_name)){
                 $GLOBALS['WF_CONFIG'] = array_merge($GLOBALS['WF_CONFIG'], include_once $conf_file_name);
             }

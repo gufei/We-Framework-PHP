@@ -16,12 +16,12 @@ spl_autoload_register('__autoload');
  */
 function __autoload($classname){
     //echo $classname;
-    require_once __DIR__.'/config.php';
+    require_once __DIR__.DIRECTORY_SEPARATOR.'config'.EXT;
     if( ! ($file_path = Wfsystem_Config::get("autoload.".$classname))){
         if(strtolower(substr($classname,0,2))=="wf"){
-            $file_path = WF_SYS_PATH.str_replace("_",DIRECTORY_SEPARATOR,strtolower($classname)).".php";
+            $file_path = WF_SYS_PATH.str_replace("_",DIRECTORY_SEPARATOR,strtolower($classname)).EXT;
         }else{
-            $file_path = WF_APP_PATH.str_replace("_",DIRECTORY_SEPARATOR,strtolower($classname)).".php";
+            $file_path = WF_APP_PATH.str_replace("_",DIRECTORY_SEPARATOR,strtolower($classname)).EXT;
         }
     }
     

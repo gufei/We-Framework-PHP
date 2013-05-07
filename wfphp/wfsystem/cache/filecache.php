@@ -53,7 +53,7 @@ class Wfsystem_Cache_Filecache {
         $file = basename($cache);
         
         if( ! is_dir($dir)) mkdir($dir,0777,true);
-        return $file = $dir.DIRECTORY_SEPARATOR.md5($file).".php";
+        return $file = $dir.DIRECTORY_SEPARATOR.md5($file).EXT;
     }
 }
 
