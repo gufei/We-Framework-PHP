@@ -7,7 +7,6 @@
  */
 class Controller_Index extends Wfsystem_Controller{
     public function __empty(){
-        echo "the ok";
         $this->assign("test","okok");
         $this->display('index.tpl');
     }

@@ -37,8 +37,12 @@ class Wfsystem_Route {
     }
     
     public function inst_controller(){
-        $current_file_name = ltrim(strrchr($_SERVER['SCRIPT_FILENAME'],DIRECTORY_SEPARATOR),DIRECTORY_SEPARATOR);
+        
+        $current_file_name = basename($_SERVER['SCRIPT_FILENAME']);
+        
         $app_controller_path = Wfsystem_Config::get("path.app_controller");
+        
+        
         if(isset($_GET['c']) && file_exists($app_controller_path.Wfsystem_Request::getrequest($_GET['c']).".php")){
             $controller = ucfirst(basename($app_controller_path))."_".ucfirst(Wfsystem_Request::getrequest($_GET['c']));
         }elseif(isset($_GET['controller']) && file_exists($app_controller_path.Wfsystem_Request::getrequest($_GET['controller']).".php")){
