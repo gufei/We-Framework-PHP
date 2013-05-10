@@ -1,4 +1,21 @@
- <!DOCTYPE html>
+<?php /*%%SmartyHeaderCode:1587145435518d04c3e87dd5-44797267%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '277cc627ee0adab94698e19cb2291befa85875fd' => 
+    array (
+      0 => '/code/We-Framework-PHP/demo/views/templates/index.tpl',
+      1 => 1368199479,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '1587145435518d04c3e87dd5-44797267',
+  'cache_lifetime' => 3600,
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_518d113a3f5451_73177084',
+  'has_nocache_code' => false,
+),true); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_518d113a3f5451_73177084')) {function content_518d113a3f5451_73177084($_smarty_tpl) {?> <!DOCTYPE html>
 <html lang="zh">
   <head>
     <meta charset="utf-8">
@@ -8,14 +25,14 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="{$smarty.const.STATIC_URL}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://static.bjwindows.net/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
         padding-bottom: 40px;
       }
     </style>
-    <link href="{$smarty.const.STATIC_URL}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="http://static.bjwindows.net/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -105,7 +122,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="//cdnjs.bootcss.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="{$smarty.const.STATIC_URL}bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://static.bjwindows.net/bootstrap/js/bootstrap.min.js"></script>
 
   </body>
 </html>
+<?php }} ?>

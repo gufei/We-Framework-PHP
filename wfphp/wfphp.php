@@ -38,7 +38,12 @@ defined('WF_SYS_CONTROLLER_PATH') or define('WF_SYS_CONTROLLER_PATH',WF_SYS_PATH
 // 系统模型目录
 defined('WF_SYS_MODELS_PATH') or define('WF_SYS_MODELS_PATH',WF_SYS_PATH.'wfmodels'.DIRECTORY_SEPARATOR);
 
+//静态文件目录
+defined('STATIC_PATH') or define('STATIC_PATH',dirname(__FILE__).'./../static'.DIRECTORY_SEPARATOR);
+//霰态文件域名
+defined('STATIC_URL') or define('STATIC_URL','http://static.bjwindows.net/');
 
+//系统扩展名
 define('EXT', '.php');
 
 
