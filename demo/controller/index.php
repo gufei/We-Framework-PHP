@@ -18,6 +18,13 @@ class Controller_Index extends Wfsystem_Controller{
         
         var_dump(Wfsystem_Cache::init()->get("aaaaa"));
     }
+    
+    public function db(){
+        $db = new Wfsystem_Database_Mysql();
+        $rs = $db->select("select * from member","object");
+        var_dump($rs);
+        exit;
+    }
 }
 
 ?>

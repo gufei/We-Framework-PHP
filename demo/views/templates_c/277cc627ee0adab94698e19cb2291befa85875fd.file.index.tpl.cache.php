@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-05-10 23:24:42
+<?php /* Smarty version Smarty-3.1.13, created on 2013-05-11 00:00:04
          compiled from "/code/We-Framework-PHP/demo/views/templates/index.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1587145435518d04c3e87dd5-44797267%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '277cc627ee0adab94698e19cb2291befa85875fd' => 
     array (
       0 => '/code/We-Framework-PHP/demo/views/templates/index.tpl',
-      1 => 1368199479,
+      1 => 1368201600,
       2 => 'file',
     ),
   ),
@@ -94,7 +94,7 @@ bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
         <h1>We Framework PHP</h1>
-        <p>这是一个适合初学者的,功能完备的PHP框架</p>
+        <p>这是一个适合初学者的,功能完备的PHP框架</p><p>by BOT QQ:8877236</p>
         <p><a href="https://github.com/gufei/We-Framework-PHP" class="btn btn-primary btn-large">下载 &raquo;</a></p>
       </div>
 

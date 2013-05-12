@@ -70,7 +70,7 @@
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
         <h1>We Framework PHP</h1>
-        <p>这是一个适合初学者的,功能完备的PHP框架</p>
+        <p>这是一个适合初学者的,功能完备的PHP框架</p><p>by BOT QQ:8877236</p>
         <p><a href="https://github.com/gufei/We-Framework-PHP" class="btn btn-primary btn-large">下载 &raquo;</a></p>
       </div>
 

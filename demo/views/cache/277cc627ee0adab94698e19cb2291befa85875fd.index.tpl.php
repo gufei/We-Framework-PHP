@@ -5,17 +5,17 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '277cc627ee0adab94698e19cb2291befa85875fd' => 
     array (
       0 => '/code/We-Framework-PHP/demo/views/templates/index.tpl',
-      1 => 1368199479,
+      1 => 1368201600,
       2 => 'file',
     ),
   ),
   'nocache_hash' => '1587145435518d04c3e87dd5-44797267',
   'cache_lifetime' => 3600,
   'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_518d113a3f5451_73177084',
+  'unifunc' => 'content_518d1984a22063_88893209',
   'has_nocache_code' => false,
 ),true); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_518d113a3f5451_73177084')) {function content_518d113a3f5451_73177084($_smarty_tpl) {?> <!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_518d1984a22063_88893209')) {function content_518d1984a22063_88893209($_smarty_tpl) {?> <!DOCTYPE html>
 <html lang="zh">
   <head>
     <meta charset="utf-8">
@@ -87,7 +87,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
         <h1>We Framework PHP</h1>
-        <p>这是一个适合初学者的,功能完备的PHP框架</p>
+        <p>这是一个适合初学者的,功能完备的PHP框架</p><p>by BOT QQ:8877236</p>
         <p><a href="https://github.com/gufei/We-Framework-PHP" class="btn btn-primary btn-large">下载 &raquo;</a></p>
       </div>
 
