@@ -27,9 +27,9 @@ class Wfsystem_Database_Mysql implements Wfsystem_Database_Database{
         
         if( ! $db ){
             $dbarray = Wfsystem_Config::get("db");
-            $dbconfig = array_weight($dbarray);
+            $this->dbconfig = $dbconfig = array_weight($dbarray);
         }else{
-            $dbconfig = Wfsystem_Config::get("db.{$db}");
+            $this->dbconfig = $dbconfig = Wfsystem_Config::get("db.{$db}");
         }
         
         if( ! $dbconfig || $dbconfig['type']!="mysql"){
