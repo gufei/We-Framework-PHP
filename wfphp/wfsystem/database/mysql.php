@@ -8,21 +8,34 @@
 class Wfsystem_Database_Mysql implements Wfsystem_Database_Database{
     
     public $db = false;
+    public $dbconfig = false;
     
-    public function __construct() {
-        $this->connect();
+    public function __construct($dbname=false) {
+        $this->connect($dbname);
     }
     public function __destruct() {
-        $this->close_connect();
+        if($this->db && ! $this->dbconfig['connect']['persistent']){
+            $this->close_connect($this->db);
+        }
+        
     }
     
     /**
      * 数据连接
      */
-    public function connect($db = "default"){
-        if( ! ($dbconfig = Wfsystem_Config::get("db.{$db}")) || $dbconfig['type']!="mysql"){
+    public function connect($db){
+        
+        if( ! $db ){
+            $dbarray = Wfsystem_Config::get("db");
+            $dbconfig = array_weight($dbarray);
+        }else{
+            $dbconfig = Wfsystem_Config::get("db.{$db}");
+        }
+        
+        if( ! $dbconfig || $dbconfig['type']!="mysql"){
             exit( "error 数据库配置文件错误！" );
         }
+        
         if( ! $dbconfig['connect']['port']) $dbconfig['connect']['port'] = 3306;
         
         if($dbconfig['connect']['persistent']){
@@ -46,7 +59,7 @@ class Wfsystem_Database_Mysql implements Wfsystem_Database_Database{
      * 关闭数据连接
      */
     public function close_connect(){
-        
+        mysql_close($this->db);
     }
     /*
      * 数据语句执行
@@ -93,20 +106,20 @@ class Wfsystem_Database_Mysql implements Wfsystem_Database_Database{
      * 得到最后一条新增数据的id
      */
     public function insert_id(){
-        
+        return mysql_insert_id($this->db);
     }
     /*
      * 得到最后一条语句影响的行数
      */
     public function affected_rows(){
-        
+        return mysql_affected_rows($this->db);
     }
     /**
      * 安全转义字符
      * @param type $str
      */
     public function escape_string($str){
-        
+        return mysql_real_escape_string($str, $this->db);
     }
     
 }

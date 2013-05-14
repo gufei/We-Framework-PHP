@@ -21,8 +21,12 @@ class Controller_Index extends Wfsystem_Controller{
     
     public function db(){
         $db = new Wfsystem_Database_Mysql();
+        $sql = "insert into member (`username`,`password`) values ('test','test')";
         $rs = $db->select("select * from member","object");
         var_dump($rs);
+        
+        $aa = $db->query($sql);
+        var_dump($aa);
         exit;
     }
 }

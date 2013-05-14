@@ -9,7 +9,7 @@ interface Wfsystem_Database_Database {
     /**
      * 数据连接
      */
-    public function connect();
+    public function connect($dbname);
     /**
      * 关闭数据连接
      */
