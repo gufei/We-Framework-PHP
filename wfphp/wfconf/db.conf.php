@@ -6,6 +6,7 @@
  * @author Jiaheng.Wu <gufei005@163.com>
  */
 return array(
+    "dbtype" => "mysql",
     "db"=>array(
         "default"=>array(
             "weight"=>10,
