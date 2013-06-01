@@ -5,7 +5,7 @@
  *
  * @author Jiaheng.Wu <gufei005@163.com>
  */
-class Wfsystem_Database_Mysql implements Wfsystem_Database_Database{
+class Wfsystem_Database_Mysql extends Wfsystem_Database_Database{
     
     public $db = false;
     public $dbconfig = false;
@@ -27,9 +27,9 @@ class Wfsystem_Database_Mysql implements Wfsystem_Database_Database{
         
         if( ! $db ){
             $dbarray = Wfsystem_Config::get("db");
-            $this->dbconfig = $dbconfig = array_weight($dbarray);
+            $this->dbconfig = $this->_config = $dbconfig = array_weight($dbarray);
         }else{
-            $this->dbconfig = $dbconfig = Wfsystem_Config::get("db.{$db}");
+            $this->dbconfig = $this->_config = $dbconfig = Wfsystem_Config::get("db.{$db}");
         }
         
         if( ! $dbconfig || $dbconfig['type']!="mysql"){

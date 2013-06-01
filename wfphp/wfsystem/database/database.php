@@ -5,44 +5,175 @@
  *
  * @author Jiaheng.Wu <gufei005@163.com>
  */
-interface Wfsystem_Database_Database {
+abstract class Wfsystem_Database_Database {
+    const SELECT =  1;
+    const INSERT =  2;
+    const UPDATE =  3;
+    const DELETE =  4;
+    
+    public static $database = array();
+    
+    protected $_identifier = '"';
+    
+    protected $_config;
+    
+    /**
+     * 返回数据连接类
+     * @param type $dbname
+     * @return \objname
+     */
+    public static function database($dbname=false) {
+        
+        $name = $dbname ? $dbname : "all";
+        
+        if( ! isset(self::$database[$name])){
+            if($dbname){
+                $dbconfig = Wfsystem_Config::get("db.{$dbname}");
+                $dbtype = ucfirst(strtolower($dbconfig['type']));
+            }else{
+                $dbconfig = Wfsystem_Config::get("db");
+                $dbtype = ucfirst(strtolower(Wfsystem_Config::get("dbtype")));
+            }
+
+            if($dbtype && $dbconfig){
+                $objname = "Wfsystem_Database_".$dbtype;
+                $db = new $objname($dbname);
+            }
+
+            
+            self::$database[$name] = $db;
+        }
+        return self::$database[$name];
+    }
+    
+    public function quote_param($column){
+        $escaped_identifier = $this->_identifier.$this->_identifier;
+        if (is_array($column)){
+            list($column, $alias) = $column;
+            $alias = str_replace($this->_identifier, $escaped_identifier, $alias);
+        }
+        
+        if(is_string($column)){
+            $column = (string) $column;
+
+            $column = str_replace($this->_identifier, $escaped_identifier, $column);
+
+            if ($column === '*'){
+                return $column;
+            }elseif(strpos($column, '.') !== FALSE){
+                $parts = explode('.', $column);
+
+                if ($prefix = $this->table_prefix()){
+                    $offset = count($parts) - 2;
+                    $parts[$offset] = $prefix.$parts[$offset];
+                }
+
+                foreach ($parts as & $part){
+                    if ($part !== '*'){
+                        $part = $this->_identifier.$part.$this->_identifier;
+                    }
+                }
+
+                $column = implode('.', $parts);
+            }else{
+                $column = $this->_identifier.$column.$this->_identifier;
+            }
+            
+            if (isset($alias)){
+                $column .= ' AS '.$this->_identifier.$alias.$this->_identifier;
+            }
+
+            return $column;
+        }
+    }
+    
+    
+    public function quote_table($table){
+        $escaped_identifier = $this->_identifier.$this->_identifier;
+
+        if (is_array($table)){
+            list($table, $alias) = $table;
+            $alias = str_replace($this->_identifier, $escaped_identifier, $alias);
+        }
+
+        if(is_string($table)){
+            $table = (string) $table;
+
+            $table = str_replace($this->_identifier, $escaped_identifier, $table);
+
+            if (strpos($table, '.') !== FALSE){
+                $parts = explode('.', $table);
+
+                if ($prefix = $this->table_prefix()){
+                    $offset = count($parts) - 1;
+                    $parts[$offset] = $prefix.$parts[$offset];
+                }
+
+                foreach ($parts as & $part){
+                    $part = $this->_identifier.$part.$this->_identifier;
+                }
+
+                $table = implode('.', $parts);
+            }else{
+                $table = $this->_identifier.$this->table_prefix().$table.$this->_identifier;
+            }
+        }
+
+        if (isset($alias)){
+            $table .= ' AS '.$this->_identifier.$this->table_prefix().$alias.$this->_identifier;
+        }
+
+        return $table;
+    }
+    
+    public function table_prefix(){
+        return $this->_config['table_prefix'];
+    }
+
+    
+    
+    
     /**
      * 数据连接
      */
-    public function connect($dbname);
+    abstract public function connect($dbname);
     /**
      * 关闭数据连接
      */
-    public function close_connect();
+    abstract public function close_connect();
     /*
      * 数据语句执行
      */
-    public function query($sql);
+    abstract public function query($sql);
     /**
      * 执行数据查询，返回所有结果
      * @param type $sql
      * @param type $type 
      */
-    public function selectall($sql,$type);
+    abstract public function selectall($sql,$type);
     /**
      * 执行数据查询，返回一条结果
      * @param type $sql
      * @param type $type
      */
-    public function selectone($sql,$type);
+    abstract public function selectone($sql,$type);
     /**
      * 得到最后一条新增数据的id
      */
-    public function insert_id();
+    abstract public function insert_id();
     /*
      * 得到最后一条语句影响的行数
      */
-    public function affected_rows();
+    abstract public function affected_rows();
     /**
      * 安全转义字符
      * @param type $str
      */
-    public function escape_string($str);
+    abstract public function escape_string($str);
+    
+    
+    
+    
     
     
 }
