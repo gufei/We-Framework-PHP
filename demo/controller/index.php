@@ -20,6 +20,13 @@ class Controller_Index extends Wfsystem_Controller{
     }
     
     public function db(){
+        $test = 'aaaaaa'; 
+        $abc = & $test; 
+        unset($abc);
+        echo $abc;
+        echo $test;
+        fopen() ;
+        exit;
         $query = DB::select(array("username","un"),"password");
         $query->select("test");
         $query->from(array("test","t"));

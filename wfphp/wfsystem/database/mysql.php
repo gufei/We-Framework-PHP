@@ -7,15 +7,15 @@
  */
 class Wfsystem_Database_Mysql extends Wfsystem_Database_Database{
     
-    public $db = false;
+    public $_connection = false;
     public $dbconfig = false;
     
-    public function __construct($dbname=false) {
-        $this->connect($dbname);
+    public function __construct($dbname=false, array $config = null) {
+        $this->connect($dbname, $config);
     }
     public function __destruct() {
-        if($this->db && ! $this->dbconfig['connect']['persistent']){
-            $this->close_connect($this->db);
+        if($this->_connection && ! $this->dbconfig['connect']['persistent']){
+            $this->close_connect($this->_connection);
         }
         
     }
@@ -39,18 +39,18 @@ class Wfsystem_Database_Mysql extends Wfsystem_Database_Database{
         if( ! $dbconfig['connect']['port']) $dbconfig['connect']['port'] = 3306;
         
         if($dbconfig['connect']['persistent']){
-            $this->db = mysql_pconnect($dbconfig['connect']['hostname'].":".$dbconfig['connect']['port'],$dbconfig['connect']['username'],$dbconfig['connect']['password']);
+            $this->_connection = mysql_pconnect($dbconfig['connect']['hostname'].":".$dbconfig['connect']['port'],$dbconfig['connect']['username'],$dbconfig['connect']['password']);
         }else{
-            $this->db = mysql_connect($dbconfig['connect']['hostname'].":".$dbconfig['connect']['port'],$dbconfig['connect']['username'],$dbconfig['connect']['password']);
+            $this->_connection = mysql_connect($dbconfig['connect']['hostname'].":".$dbconfig['connect']['port'],$dbconfig['connect']['username'],$dbconfig['connect']['password']);
         }
         
-        if( ! $this->db){
+        if( ! $this->_connection){
             exit("error 不能连接到mysql");
         }
-        if( ! mysql_select_db($dbconfig['connect']['database'],$this->db) ){
-            exit("mysql错误：".mysql_error($this->db));
+        if( ! mysql_select_db($dbconfig['connect']['database'],$this->_connection) ){
+            exit("mysql错误：".mysql_error($this->_connection));
         }
-        mysql_set_charset($dbconfig['charset'], $this->db);
+        mysql_set_charset($dbconfig['charset'], $this->_connection);
         
         
     }
@@ -59,16 +59,16 @@ class Wfsystem_Database_Mysql extends Wfsystem_Database_Database{
      * 关闭数据连接
      */
     public function close_connect(){
-        mysql_close($this->db);
+        mysql_close($this->_connection);
     }
     /*
      * 数据语句执行
      */
     public function query($sql){
-        if($rs = mysql_query($sql,$this->db)){
+        if($rs = mysql_query($sql,$this->_connection)){
             return $rs;
         }else{
-            exit(mysql_error($this->db));
+            exit(mysql_error($this->_connection));
         }
     }
     
@@ -106,21 +106,33 @@ class Wfsystem_Database_Mysql extends Wfsystem_Database_Database{
      * 得到最后一条新增数据的id
      */
     public function insert_id(){
-        return mysql_insert_id($this->db);
+        return mysql_insert_id($this->_connection);
     }
     /*
      * 得到最后一条语句影响的行数
      */
     public function affected_rows(){
-        return mysql_affected_rows($this->db);
+        return mysql_affected_rows($this->_connection);
     }
     /**
      * 安全转义字符
      * @param type $str
      */
-    public function escape_string($str){
-        return mysql_real_escape_string($str, $this->db);
-    }
+    public function escape($value)
+	{
+		// Make sure the database is connected
+		$this->_connection or $this->connect();
+
+		if (($value = mysql_real_escape_string( (string) $value, $this->_connection)) === FALSE)
+		{
+			throw new Database_Exception(':error',
+				array(':error' => mysql_error($this->_connection)),
+				mysql_errno($this->_connection));
+		}
+
+		// SQL standard is to use single-quotes for all values
+		return "'$value'";
+	}
     
 }
 

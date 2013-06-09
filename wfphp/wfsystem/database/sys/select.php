@@ -36,6 +36,12 @@ class Wfsystem_Database_Sys_Select {
     }
     
     
+    /**
+     * Wfsystem_Database_Sys_Select::build_query()
+     * 
+     * @param mixed $db
+     * @return string
+     */
     public function build_query($db = NULL){
         
         
@@ -64,6 +70,11 @@ class Wfsystem_Database_Sys_Select {
     }
     
     
+    /**
+     * Wfsystem_Database_Sys_Select::__toString()
+     * 
+     * @return
+     */
     public function __toString(){
         try
         {

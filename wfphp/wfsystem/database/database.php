@@ -22,7 +22,7 @@ abstract class Wfsystem_Database_Database {
      * @param type $dbname
      * @return \objname
      */
-    public static function database($dbname=false) {
+    public static function instance($dbname=false) {
         
         $name = $dbname ? $dbname : "all";
         
@@ -38,6 +38,8 @@ abstract class Wfsystem_Database_Database {
             if($dbtype && $dbconfig){
                 $objname = "Wfsystem_Database_".$dbtype;
                 $db = new $objname($dbname);
+            } else {
+                throw new Wfsystem_Exception('数据库配置不存在:'.$name);
             }
 
             
@@ -45,6 +47,55 @@ abstract class Wfsystem_Database_Database {
         }
         return self::$database[$name];
     }
+    
+    public function quote($value)
+	{
+		if ($value === NULL)
+		{
+			return 'NULL';
+		}
+		elseif ($value === TRUE)
+		{
+			return "'1'";
+		}
+		elseif ($value === FALSE)
+		{
+			return "'0'";
+		}
+		elseif (is_object($value))
+		{
+			if ($value instanceof Database_Query)
+			{
+				// Create a sub-query
+				return '('.$value->compile($this).')';
+			}
+			elseif ($value instanceof Database_Expression)
+			{
+				// Compile the expression
+				return $value->compile($this);
+			}
+			else
+			{
+				// Convert the object to a string
+				return $this->quote( (string) $value);
+			}
+		}
+		elseif (is_array($value))
+		{
+			return '('.implode(', ', array_map(array($this, __FUNCTION__), $value)).')';
+		}
+		elseif (is_int($value))
+		{
+			return (int) $value;
+		}
+		elseif (is_float($value))
+		{
+			// Convert to non-locale aware float to prevent possible commas
+			return sprintf('%F', $value);
+		}
+
+		return $this->escape($value);
+	}
     
     public function quote_param($column){
         $escaped_identifier = $this->_identifier.$this->_identifier;
@@ -169,7 +220,7 @@ abstract class Wfsystem_Database_Database {
      * 安全转义字符
      * @param type $str
      */
-    abstract public function escape_string($str);
+    abstract public function escape($str);
     
     
     

@@ -7,9 +7,25 @@
  */
 class Wfsystem_Exception extends Exception {
     
+    
+    public function __construct($message = "", array $variables = NULL, $code = 0, Exception $previous = NULL)
+	{
+		// Set the message
+		//$message = __($message, $variables);
+        
+        $message = strtr($message,$variables);
+
+		// Pass the message and integer code to the parent
+		parent::__construct($message, (int) $code, $previous);
+
+		// Save the unmodified code
+		// @link http://bugs.php.net/39615
+		$this->code = $code;
+	}
+    
     public function __toString()
     {
-        return Kohana_Exception::text($this);
+        return Wfsystem_Exception::text($this);
     }
     
     public static function text(Exception $e)
